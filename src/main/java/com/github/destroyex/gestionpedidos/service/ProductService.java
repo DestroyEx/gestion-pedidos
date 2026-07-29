@@ -14,25 +14,25 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public List<Product> findAll(){
+    public List<Product> findAll() {
         return productRepository.findAll();
     }
 
-    public Product findById(Long id){
+    public Product findById(Long id) {
         return productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found with id: "+ id));
+                .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
     }
 
-    public Product create (Product product){
-       return productRepository.save(product);
+    public Product create(Product product) {
+        return productRepository.save(product);
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
         Product deletedProduct = findById(id);
         productRepository.delete(deletedProduct);
     }
 
-    public Product update (Long id, Product updatedProduct){
+    public Product update(Long id, Product updatedProduct) {
         Product existingProduct = findById(id);
         existingProduct.setName(updatedProduct.getName());
         existingProduct.setDescription(updatedProduct.getDescription());
