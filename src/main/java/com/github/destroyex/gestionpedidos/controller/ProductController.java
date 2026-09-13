@@ -1,6 +1,7 @@
 package com.github.destroyex.gestionpedidos.controller;
 
-import com.github.destroyex.gestionpedidos.entity.Product;
+import com.github.destroyex.gestionpedidos.dto.ProductRequestDTO;
+import com.github.destroyex.gestionpedidos.dto.ProductResponseDTO;
 import com.github.destroyex.gestionpedidos.service.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,18 +19,18 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<Product> getAllProducts() {
+    public List<ProductResponseDTO> getAllProducts() {
         return productService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
+    public ResponseEntity<ProductResponseDTO> getProductById(@PathVariable Long id) {
         return ResponseEntity.ok(productService.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
-        Product created = productService.create(product);
+    public ResponseEntity<ProductResponseDTO> createProduct(@RequestBody ProductRequestDTO product) {
+        ProductResponseDTO created = productService.create(product);
         return ResponseEntity.status(201).body(created);
     }
 
@@ -40,8 +41,9 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product product) {
-        return ResponseEntity.ok(productService.update(id, product));
+    public ResponseEntity<ProductResponseDTO> updateProduct(@PathVariable Long id, @RequestBody ProductRequestDTO product) {
+        ProductResponseDTO updated = productService.update(id, product);
+        return ResponseEntity.ok(updated);
     }
 
 }
