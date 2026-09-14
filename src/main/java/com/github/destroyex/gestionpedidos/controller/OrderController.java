@@ -1,6 +1,7 @@
 package com.github.destroyex.gestionpedidos.controller;
 
-import com.github.destroyex.gestionpedidos.entity.Order;
+import com.github.destroyex.gestionpedidos.dto.OrderRequestDTO;
+import com.github.destroyex.gestionpedidos.dto.OrderResponseDTO;
 import com.github.destroyex.gestionpedidos.service.OrderService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,18 +19,18 @@ public class OrderController {
     }
 
     @GetMapping
-    public List<Order> getAllOrders() {
+    public List<OrderResponseDTO> getAllOrders() {
         return orderService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Order> getOrderById(@PathVariable Long id) {
+    public ResponseEntity<OrderResponseDTO> getOrderById(@PathVariable Long id) {
         return ResponseEntity.ok(orderService.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<Order> createOrder(@RequestBody Order order) {
-        Order created = orderService.create(order);
+    public ResponseEntity<OrderResponseDTO> createOrder(@RequestBody OrderRequestDTO orderRequestDTO) {
+        OrderResponseDTO created = orderService.create(orderRequestDTO);
         return ResponseEntity.status(201).body(created);
     }
 
@@ -40,7 +41,8 @@ public class OrderController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Order> updateOrder(@PathVariable Long id, @RequestBody Order order) {
-        return ResponseEntity.ok(orderService.update(id, order));
+    public ResponseEntity<OrderResponseDTO> updateOrder(@PathVariable Long id, @RequestBody OrderRequestDTO order) {
+        OrderResponseDTO updated = orderService.update(id, order);
+        return ResponseEntity.ok(updated);
     }
 }
